@@ -1,0 +1,29 @@
+services:
+  - type: web
+    name: gls-address-validator
+    runtime: python
+    region: frankfurt
+    plan: free
+    buildCommand: pip install -r requirements.txt
+    startCommand: uvicorn app.main:app --host 0.0.0.0 --port $PORT
+    healthCheckPath: /health
+    autoDeploy: true
+
+    envVars:
+      - key: RUIAN_API_KEY
+        sync: false
+
+      - key: RUIAN_AUTO_CORRECT_THRESHOLD
+        value: "0.85"
+
+      - key: GLS_USERNAME
+        sync: false
+
+      - key: GLS_PASSWORD
+        sync: false
+
+      - key: GLS_CLIENT_NUMBER
+        sync: false
+
+      - key: ALLOWED_ORIGINS
+        sync: false
